@@ -90,7 +90,8 @@
 //    [cell.textLabel setText:[NSString stringWithFormat:@"%@ %@", [myNote valueForKey:@"parm 1"], [myNote valueForKey:@"parm 2"]]];
 //    [cell.detailTextLabel setText:[myNote valueForKey:@"detail"]];
     
-    [cell.textLabel setText:[NSString stringWithFormat:@"%@", [myNote valueForKey:@"noteText"]]];
+    [cell.textLabel setText:[NSString stringWithFormat:@"%@", [myNote valueForKey:@"noteTitle"]]];
+    [cell.detailTextLabel setText:[myNote valueForKey:@"noteText"]];
     
     return cell;
 }

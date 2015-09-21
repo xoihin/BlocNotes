@@ -13,12 +13,12 @@
 
 
 @property (strong, nonatomic) IBOutlet UITextView *myTextView;
+@property (strong, nonatomic) IBOutlet UITextField *myNoteTitle;
 
-
-- (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)sender;
 
-
 @property (nonatomic, strong) NSManagedObject *selectedNote;
+
+
 
 @end

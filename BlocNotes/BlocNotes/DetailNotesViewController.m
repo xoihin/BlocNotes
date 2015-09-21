@@ -10,7 +10,13 @@
 
 
 
-@interface DetailNotesViewController () <UITextFieldDelegate>;
+@interface DetailNotesViewController () <UITextFieldDelegate, UITextViewDelegate>;
+
+#define kDefaultTextTitle NSLocalizedString(@"Title of this note", @"Default text")
+#define kDefaultTextBody NSLocalizedString(@"Write your note...", @"Default text")
+#define kNoTitle NSLocalizedString(@"No title", @"No title")
+#define kNoNoteDetail NSLocalizedString(@"No note detail", @"No note detail")
+
 
 @end
 
@@ -19,11 +25,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-//    self.navigationItem.title = NSLocalizedString(@"Update Note", @"View Title");   
+
+    self.myTextView.delegate = self;
+    self.myNoteTitle.delegate = self;
     
     if (self.selectedNote) {
+        [self.myNoteTitle setText:[self.selectedNote valueForKey:@"noteTitle"]];
         [self.myTextView setText:[self.selectedNote valueForKey:@"noteText"]];
+        self.navigationItem.title = @"Update Note";
+    } else {
+        self.myTextView.text = kDefaultTextBody;
+        self.myNoteTitle.placeholder = kDefaultTextTitle;
+        self.navigationItem.title = @"New Note";
     }
     
 }
@@ -64,26 +77,24 @@
 #pragma mark - Button Actions
 
 
-- (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)sender {
     
     NSManagedObjectContext *context = [self managedObjectContext];
     
     if (self.selectedNote) {
         // Update
+        [self SetDefaultForBlankNote];
+        [self.selectedNote setValue:self.myNoteTitle.text forKey:@"noteTitle"];
         [self.selectedNote setValue:self.myTextView.text forKey:@"noteText"];
         
     } else {
         // Create new note
         NSManagedObject *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"BlocNotes" inManagedObjectContext:context];
+        [self SetDefaultForBlankNote];
+        [newNote setValue:self.myNoteTitle.text forKey:@"noteTitle"];
         [newNote setValue:self.myTextView.text forKey:@"noteText"];
     }
     
-
     NSError *error = nil;
     // Save the object to persistent store
     if (![context save:&error]) {
@@ -91,8 +102,57 @@
     }
     
     // Return
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
+- (void) SetDefaultForBlankNote {
+    
+    if ([self.myNoteTitle.text isEqualToString:@""]) {
+        self.myNoteTitle.text = kNoTitle;
+    }
+    if ([self.myTextView.text isEqualToString:kDefaultTextBody]) {
+        self.myTextView.text = kNoNoteDetail;
+    }
+    
+}
+
+
+
+#pragma mark - Text View Delegates
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([self.myTextView.text isEqualToString:kDefaultTextBody]) {
+        self.myTextView.text = @"";
+        
+    }
+    [self.myTextView becomeFirstResponder];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([self.myTextView.text isEqualToString:@""]) {
+        self.myTextView.text = kDefaultTextBody;
+    }
+    [self.myTextView resignFirstResponder];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

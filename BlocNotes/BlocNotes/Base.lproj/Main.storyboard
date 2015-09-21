@@ -10,11 +10,11 @@
             <objects>
                 <tableViewController id="pdg-Gd-QCX" customClass="NotesTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Eiz-Rs-a5I">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoteCell" textLabel="Df6-9X-1ie" detailTextLabel="ZzK-97-MqB" style="IBUITableViewCellStyleSubtitle" id="4Fs-IT-L2K">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="NoteCell" textLabel="Df6-9X-1ie" detailTextLabel="ZzK-97-MqB" style="IBUITableViewCellStyleSubtitle" id="4Fs-IT-L2K">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Fs-IT-L2K" id="q9o-qH-yLl">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -22,19 +22,19 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Df6-9X-1ie">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZzK-97-MqB">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="wbQ-uF-ThP" kind="presentation" identifier="UpdateNote" modalTransitionStyle="flipHorizontal" id="W2z-Lp-J2k"/>
+                                    <segue destination="wbQ-uF-ThP" kind="show" identifier="UpdateNote" id="W2z-Lp-J2k"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -46,7 +46,7 @@
                     <navigationItem key="navigationItem" id="AhH-0b-JaN">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="raS-MH-4VL">
                             <connections>
-                                <segue destination="wbQ-uF-ThP" kind="presentation" identifier="ToDetailNote" modalTransitionStyle="flipHorizontal" id="sJD-ha-obc"/>
+                                <segue destination="wbQ-uF-ThP" kind="show" identifier="ToDetailNote" id="sJD-ha-obc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -64,69 +64,42 @@
                         <viewControllerLayoutGuide type="bottom" id="4i6-nM-4zv"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="RUQ-ie-Pt0">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6a2-pP-Wop">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
-                                <items>
-                                    <navigationItem title="Detail Note" id="5C5-pr-uXy">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Md3-ns-Esp">
-                                            <connections>
-                                                <action selector="cancelButtonPressed:" destination="wbQ-uF-ThP" id="chz-iD-l3W"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="0w2-oy-0cL">
-                                            <connections>
-                                                <action selector="saveButtonPressed:" destination="wbQ-uF-ThP" id="Red-94-niI"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title of this note:" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JEM-fQ-ID6">
-                                <rect key="frame" x="21" y="80" width="558" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JEM-fQ-ID6">
+                                <rect key="frame" x="21" y="72" width="558" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Write your note..." translatesAutoresizingMaskIntoConstraints="NO" id="j6S-3u-Zwq">
-                                <rect key="frame" x="21" y="120" width="558" height="430"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j6S-3u-Zwq">
+                                <rect key="frame" x="21" y="110" width="558" height="346"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="j6S-3u-Zwq" firstAttribute="width" secondItem="JEM-fQ-ID6" secondAttribute="width" id="2hz-Uf-pcF"/>
-                            <constraint firstItem="j6S-3u-Zwq" firstAttribute="top" secondItem="JEM-fQ-ID6" secondAttribute="bottom" constant="10" id="Pm4-2S-dba"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="j6S-3u-Zwq" secondAttribute="trailing" constant="5" id="ac7-SC-SkD"/>
-                            <constraint firstAttribute="width" secondItem="6a2-pP-Wop" secondAttribute="width" id="ax7-x5-RzK"/>
-                            <constraint firstItem="j6S-3u-Zwq" firstAttribute="top" secondItem="JEM-fQ-ID6" secondAttribute="bottom" constant="10" id="bpG-h4-Rgh"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="JEM-fQ-ID6" secondAttribute="trailing" constant="5" id="dOZ-8S-GTB"/>
-                            <constraint firstAttribute="centerX" secondItem="6a2-pP-Wop" secondAttribute="centerX" id="dV8-eX-t1l"/>
-                            <constraint firstItem="JEM-fQ-ID6" firstAttribute="leading" secondItem="RUQ-ie-Pt0" secondAttribute="leadingMargin" constant="5" id="eHS-Cu-CWu"/>
-                            <constraint firstItem="6a2-pP-Wop" firstAttribute="top" secondItem="b2j-6r-66T" secondAttribute="bottom" constant="8" id="iFF-vh-RFD"/>
-                            <constraint firstItem="j6S-3u-Zwq" firstAttribute="leading" secondItem="RUQ-ie-Pt0" secondAttribute="leadingMargin" constant="5" id="j7f-jO-d0I"/>
-                            <constraint firstItem="j6S-3u-Zwq" firstAttribute="width" secondItem="JEM-fQ-ID6" secondAttribute="width" id="jR9-cX-SYT"/>
-                            <constraint firstItem="JEM-fQ-ID6" firstAttribute="leading" secondItem="RUQ-ie-Pt0" secondAttribute="leadingMargin" constant="5" id="kxw-Qa-Kn0"/>
-                            <constraint firstItem="JEM-fQ-ID6" firstAttribute="top" secondItem="b2j-6r-66T" secondAttribute="bottom" constant="60" id="qNS-08-mPr"/>
-                            <constraint firstItem="4i6-nM-4zv" firstAttribute="top" secondItem="j6S-3u-Zwq" secondAttribute="bottom" constant="50" id="qng-Iu-z8K"/>
-                            <constraint firstItem="JEM-fQ-ID6" firstAttribute="trailing" secondItem="RUQ-ie-Pt0" secondAttribute="trailingMargin" constant="5" id="rOX-lY-2xV"/>
-                            <constraint firstItem="JEM-fQ-ID6" firstAttribute="top" secondItem="b2j-6r-66T" secondAttribute="bottom" constant="60" id="rtA-WK-9sg"/>
-                            <constraint firstAttribute="centerX" secondItem="JEM-fQ-ID6" secondAttribute="centerX" id="uZB-0y-HzX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JEM-fQ-ID6" secondAttribute="trailing" constant="5" id="7fq-A4-0lG"/>
+                            <constraint firstItem="4i6-nM-4zv" firstAttribute="top" secondItem="j6S-3u-Zwq" secondAttribute="bottom" constant="100" id="Gk8-ZY-608"/>
+                            <constraint firstItem="JEM-fQ-ID6" firstAttribute="leading" secondItem="RUQ-ie-Pt0" secondAttribute="leadingMargin" constant="5" id="JkA-zr-P3J"/>
+                            <constraint firstItem="j6S-3u-Zwq" firstAttribute="leading" secondItem="RUQ-ie-Pt0" secondAttribute="leadingMargin" constant="5" id="Qer-jg-JWx"/>
+                            <constraint firstItem="JEM-fQ-ID6" firstAttribute="top" secondItem="b2j-6r-66T" secondAttribute="bottom" constant="8" id="UpN-Yc-hMt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="j6S-3u-Zwq" secondAttribute="trailing" constant="5" id="cpL-37-Y7G"/>
+                            <constraint firstItem="j6S-3u-Zwq" firstAttribute="top" secondItem="JEM-fQ-ID6" secondAttribute="bottom" constant="8" id="cuc-YT-Gd2"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="kxw-Qa-Kn0"/>
-                                <exclude reference="qNS-08-mPr"/>
-                                <exclude reference="rOX-lY-2xV"/>
-                                <exclude reference="bpG-h4-Rgh"/>
-                                <exclude reference="jR9-cX-SYT"/>
-                            </mask>
-                        </variation>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem systemItem="save" id="oHg-79-9z0">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="wbQ-uF-ThP" id="rAn-PL-j60"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="X3v-td-Q9P"/>
+                    </toolbarItems>
                     <connections>
+                        <outlet property="myNoteTitle" destination="JEM-fQ-ID6" id="TST-Fb-EiA"/>
                         <outlet property="myTextView" destination="j6S-3u-Zwq" id="cHn-hS-M5v"/>
                     </connections>
                 </viewController>
@@ -137,7 +110,7 @@
         <!--Navigation Controller-->
         <scene sceneID="aT8-64-XOI">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="b9Q-7F-wT9" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="b9Q-7F-wT9" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Xzy-WM-OLj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
