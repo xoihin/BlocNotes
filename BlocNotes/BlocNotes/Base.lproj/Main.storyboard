@@ -73,22 +73,26 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j6S-3u-Zwq">
-                                <rect key="frame" x="21" y="110" width="558" height="346"/>
+                                <rect key="frame" x="21" y="142" width="558" height="344"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="JEM-fQ-ID6" secondAttribute="trailing" constant="5" id="7fq-A4-0lG"/>
-                            <constraint firstItem="4i6-nM-4zv" firstAttribute="top" secondItem="j6S-3u-Zwq" secondAttribute="bottom" constant="100" id="Gk8-ZY-608"/>
+                            <constraint firstItem="4i6-nM-4zv" firstAttribute="top" secondItem="j6S-3u-Zwq" secondAttribute="bottom" constant="70" id="Gk8-ZY-608"/>
                             <constraint firstItem="JEM-fQ-ID6" firstAttribute="leading" secondItem="RUQ-ie-Pt0" secondAttribute="leadingMargin" constant="5" id="JkA-zr-P3J"/>
                             <constraint firstItem="j6S-3u-Zwq" firstAttribute="leading" secondItem="RUQ-ie-Pt0" secondAttribute="leadingMargin" constant="5" id="Qer-jg-JWx"/>
                             <constraint firstItem="JEM-fQ-ID6" firstAttribute="top" secondItem="b2j-6r-66T" secondAttribute="bottom" constant="8" id="UpN-Yc-hMt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="j6S-3u-Zwq" secondAttribute="trailing" constant="5" id="cpL-37-Y7G"/>
-                            <constraint firstItem="j6S-3u-Zwq" firstAttribute="top" secondItem="JEM-fQ-ID6" secondAttribute="bottom" constant="8" id="cuc-YT-Gd2"/>
+                            <constraint firstItem="j6S-3u-Zwq" firstAttribute="top" secondItem="JEM-fQ-ID6" secondAttribute="bottom" constant="40" id="cuc-YT-Gd2"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="eK6-kU-LQf" appends="YES" id="Mts-xI-Ygt"/>
+                        </connections>
                     </view>
                     <toolbarItems>
                         <barButtonItem systemItem="save" id="oHg-79-9z0">
@@ -97,6 +101,11 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="X3v-td-Q9P"/>
+                        <barButtonItem systemItem="action" id="PB1-J1-mQ3">
+                            <connections>
+                                <action selector="shareButtonPressed:" destination="wbQ-uF-ThP" id="0yW-QI-g1x"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <connections>
                         <outlet property="myNoteTitle" destination="JEM-fQ-ID6" id="TST-Fb-EiA"/>
@@ -104,6 +113,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gtM-KP-94z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="eK6-kU-LQf">
+                    <connections>
+                        <action selector="tapGestureDidFired:" destination="wbQ-uF-ThP" id="r4g-Vl-xeP"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1968" y="600"/>
         </scene>

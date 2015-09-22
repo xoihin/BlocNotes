@@ -16,9 +16,12 @@
 @property (strong, nonatomic) IBOutlet UITextField *myNoteTitle;
 
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)shareButtonPressed:(UIBarButtonItem *)sender;
+
 
 @property (nonatomic, strong) NSManagedObject *selectedNote;
 
+- (IBAction)tapGestureDidFired:(UITapGestureRecognizer *)sender;
 
 
 @end

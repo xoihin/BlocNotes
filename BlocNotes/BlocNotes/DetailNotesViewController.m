@@ -76,7 +76,6 @@
 
 #pragma mark - Button Actions
 
-
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)sender {
     
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -107,6 +106,33 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+
+- (IBAction)shareButtonPressed:(UIBarButtonItem *)sender {
+    
+    NSMutableArray *noteToShare = [NSMutableArray array];
+    
+    if (self.myNoteTitle.text.length > 0) {
+        [noteToShare addObject:self.myNoteTitle.text];
+    }
+    
+    if (self.myTextView.text.length) {
+        [noteToShare addObject:self.myTextView.text];
+    }
+    
+    if (noteToShare.count > 0) {
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:noteToShare applicationActivities:nil];
+        [self presentViewController:activityVC animated:YES completion:nil];
+    }
+    
+}
+
+
+- (IBAction)tapGestureDidFired:(UITapGestureRecognizer *)sender {
+    [self.myTextView resignFirstResponder];
+    [self.myNoteTitle resignFirstResponder];
+}
+
+
 - (void) SetDefaultForBlankNote {
     
     if ([self.myNoteTitle.text isEqualToString:@""]) {
@@ -126,7 +152,6 @@
 {
     if ([self.myTextView.text isEqualToString:kDefaultTextBody]) {
         self.myTextView.text = @"";
-        
     }
     [self.myTextView becomeFirstResponder];
 }
@@ -141,15 +166,13 @@
 
 
 
+#pragma mark - Text Field Delegates
 
-
-
-
-
-
-
-
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.myNoteTitle resignFirstResponder];
+    return YES;
+}
 
 
 
