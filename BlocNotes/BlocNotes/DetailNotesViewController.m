@@ -33,10 +33,12 @@
         [self.myNoteTitle setText:[self.selectedNote valueForKey:@"noteTitle"]];
         [self.myTextView setText:[self.selectedNote valueForKey:@"noteText"]];
         self.navigationItem.title = @"Update Note";
+        self.shareButton.enabled = YES;
     } else {
         self.myTextView.text = kDefaultTextBody;
         self.myNoteTitle.placeholder = kDefaultTextTitle;
         self.navigationItem.title = @"New Note";
+        self.shareButton.enabled = NO;
     }
     
 }
@@ -74,7 +76,7 @@
 
 
 
-#pragma mark - Button Actions
+#pragma mark - Button Actions and Gesture Recognizer
 
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)sender {
     

@@ -101,7 +101,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="X3v-td-Q9P"/>
-                        <barButtonItem systemItem="action" id="PB1-J1-mQ3">
+                        <barButtonItem enabled="NO" systemItem="action" id="PB1-J1-mQ3">
                             <connections>
                                 <action selector="shareButtonPressed:" destination="wbQ-uF-ThP" id="0yW-QI-g1x"/>
                             </connections>
@@ -110,6 +110,7 @@
                     <connections>
                         <outlet property="myNoteTitle" destination="JEM-fQ-ID6" id="TST-Fb-EiA"/>
                         <outlet property="myTextView" destination="j6S-3u-Zwq" id="cHn-hS-M5v"/>
+                        <outlet property="shareButton" destination="PB1-J1-mQ3" id="D5N-cv-zoQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gtM-KP-94z" userLabel="First Responder" sceneMemberID="firstResponder"/>
