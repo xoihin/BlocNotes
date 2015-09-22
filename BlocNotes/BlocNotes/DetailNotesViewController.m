@@ -86,6 +86,7 @@
         [self SetDefaultForBlankNote];
         [self.selectedNote setValue:self.myNoteTitle.text forKey:@"noteTitle"];
         [self.selectedNote setValue:self.myTextView.text forKey:@"noteText"];
+        [self.selectedNote setValue:[NSDate date] forKey:@"noteLastModifiedDate"];
         
     } else {
         // Create new note
@@ -93,6 +94,7 @@
         [self SetDefaultForBlankNote];
         [newNote setValue:self.myNoteTitle.text forKey:@"noteTitle"];
         [newNote setValue:self.myTextView.text forKey:@"noteText"];
+        [newNote setValue:[NSDate date] forKey:@"noteCreatedDate"];
     }
     
     NSError *error = nil;
