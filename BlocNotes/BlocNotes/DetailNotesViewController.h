@@ -14,11 +14,6 @@
 
 @property (strong, nonatomic) IBOutlet UITextView *myTextView;
 @property (strong, nonatomic) IBOutlet UITextField *myNoteTitle;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *shareButton;
-
-- (IBAction)saveButtonPressed:(UIBarButtonItem *)sender;
-- (IBAction)shareButtonPressed:(UIBarButtonItem *)sender;
-
 
 @property (nonatomic, strong) NSManagedObject *selectedNote;
 

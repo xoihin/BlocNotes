@@ -94,23 +94,10 @@
                             <outletCollection property="gestureRecognizers" destination="eK6-kU-LQf" appends="YES" id="Mts-xI-Ygt"/>
                         </connections>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem systemItem="save" id="oHg-79-9z0">
-                            <connections>
-                                <action selector="saveButtonPressed:" destination="wbQ-uF-ThP" id="rAn-PL-j60"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="X3v-td-Q9P"/>
-                        <barButtonItem enabled="NO" systemItem="action" id="PB1-J1-mQ3">
-                            <connections>
-                                <action selector="shareButtonPressed:" destination="wbQ-uF-ThP" id="0yW-QI-g1x"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <connections>
                         <outlet property="myNoteTitle" destination="JEM-fQ-ID6" id="TST-Fb-EiA"/>
                         <outlet property="myTextView" destination="j6S-3u-Zwq" id="cHn-hS-M5v"/>
-                        <outlet property="shareButton" destination="PB1-J1-mQ3" id="D5N-cv-zoQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gtM-KP-94z" userLabel="First Responder" sceneMemberID="firstResponder"/>
