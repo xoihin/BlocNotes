@@ -77,11 +77,11 @@
     // Create the coordinator and store
     
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"BlocNotes.sqlite"];
+//    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"BlocNotes.sqlite"];
     
-//    NSURL *storeURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.BenchR.TodayExtensionSharingDefaults"];
-//    storeURL = [storeURL URLByAppendingPathComponent:@"HTWcampus.sqlite"];
-//    NSLog(@"StoreURL2: %@", storeURL);
+    NSURL *storeURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.xahBlocNotes"];
+    storeURL = [storeURL URLByAppendingPathComponent:@"BlocNotes.sqlite"];
+    NSLog(@"StoreURL2: %@", storeURL);
     
     NSDictionary *migrateOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
     

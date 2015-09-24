@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F60E42EC1BB4A1C2009DE3FF /* BlocNotes.m in Sources */ = {isa = PBXBuildFile; fileRef = F60E42EB1BB4A1C2009DE3FF /* BlocNotes.m */; };
 		F61138411BB39F7A00DFF6F9 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F61138401BB39F7A00DFF6F9 /* ShareViewController.m */; };
 		F61138431BB39F7A00DFF6F9 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F61138421BB39F7A00DFF6F9 /* MainInterface.storyboard */; };
 		F61138461BB39F7A00DFF6F9 /* BlocNotesShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F611383B1BB39F7A00DFF6F9 /* BlocNotesShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -53,6 +54,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F60E42EA1BB4A1C2009DE3FF /* BlocNotes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlocNotes.h; sourceTree = SOURCE_ROOT; };
+		F60E42EB1BB4A1C2009DE3FF /* BlocNotes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlocNotes.m; sourceTree = SOURCE_ROOT; };
 		F611383B1BB39F7A00DFF6F9 /* BlocNotesShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BlocNotesShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F611383E1BB39F7A00DFF6F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F611383F1BB39F7A00DFF6F9 /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
@@ -158,6 +161,8 @@
 				F6569DAC1BAF97CC002DDE27 /* Images.xcassets */,
 				F6569DAE1BAF97CC002DDE27 /* LaunchScreen.xib */,
 				F6569DA31BAF97CC002DDE27 /* BlocNotes.xcdatamodeld */,
+				F60E42EA1BB4A1C2009DE3FF /* BlocNotes.h */,
+				F60E42EB1BB4A1C2009DE3FF /* BlocNotes.m */,
 				F6569D9C1BAF97CC002DDE27 /* Supporting Files */,
 			);
 			path = BlocNotes;
@@ -341,6 +346,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6C0979E1BB04EEA008F1469 /* DetailNotesViewController.m in Sources */,
+				F60E42EC1BB4A1C2009DE3FF /* BlocNotes.m in Sources */,
 				F6569DA21BAF97CC002DDE27 /* AppDelegate.m in Sources */,
 				F6C0979B1BB04EC7008F1469 /* NotesTableViewController.m in Sources */,
 				F6569DA51BAF97CC002DDE27 /* BlocNotes.xcdatamodeld in Sources */,
@@ -577,6 +583,7 @@
 				F61138481BB39F7A00DFF6F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F6569D941BAF97CC002DDE27 /* Build configuration list for PBXProject "BlocNotes" */ = {
 			isa = XCConfigurationList;

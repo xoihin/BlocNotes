@@ -7,12 +7,33 @@
 //
 
 #import "ShareViewController.h"
+#import "DetailNotesViewController.h"
+
+
 
 @interface ShareViewController ()
 
 @end
 
 @implementation ShareViewController
+
+
+- (void)pushConfigurationViewController:(UIViewController *)viewController {
+    NSLog(@"Push...");
+}
+
+
+- (void)presentationAnimationDidFinish {
+    NSLog(@"Presentation...");
+}
+
+
+- (void)loadView{
+    [super loadView];
+    NSLog(@"loadView...");
+}
+
+
 
 - (BOOL)isContentValid {
     // Do validation of contentText and/or NSExtensionContext attachments here
@@ -44,7 +65,7 @@
 }
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.extensionContext cancelRequestWithError:nil];
 }
 
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)sender {
