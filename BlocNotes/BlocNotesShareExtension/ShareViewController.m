@@ -17,17 +17,42 @@
 
 @implementation ShareViewController
 
+
+- (void)loadView {
+    [super loadView];
+    
+    for (NSExtensionItem *item in self.extensionContext.inputItems) {
+        for (NSItemProvider *itemProvider in item.attachments) {
+            if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePropertyList]) {
+                [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypePropertyList options:nil completionHandler:^(NSDictionary *jsDict, NSError *error) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSDictionary *jsPreprocessingResults = jsDict[NSExtensionJavaScriptPreprocessingResultsKey];
+                        NSString *selectedText = jsPreprocessingResults[@"selection"];
+                        NSString *pageTitle = jsPreprocessingResults[@"title"];
+
+                        if ([selectedText length] > 0) {
+                            self.shareTextView.text = selectedText;
+                        }
+                        if ([pageTitle length] > 0) {
+                            self.shareTextTitle.text = pageTitle;
+                        }
+                    });
+                }];
+                break;
+            }
+        }
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    
 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.shareTextTitle becomeFirstResponder];
+    
+    [self.shareTextView becomeFirstResponder];
 }
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {

@@ -18,6 +18,7 @@
 		F6569DAD1BAF97CC002DDE27 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6569DAC1BAF97CC002DDE27 /* Images.xcassets */; };
 		F6569DB01BAF97CC002DDE27 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6569DAE1BAF97CC002DDE27 /* LaunchScreen.xib */; };
 		F6569DBC1BAF97CC002DDE27 /* BlocNotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6569DBB1BAF97CC002DDE27 /* BlocNotesTests.m */; };
+		F6A427111BB59A9400ED7F87 /* NotePreprocessor.js in Resources */ = {isa = PBXBuildFile; fileRef = F6A427101BB59A9400ED7F87 /* NotePreprocessor.js */; };
 		F6C0979B1BB04EC7008F1469 /* NotesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C0979A1BB04EC7008F1469 /* NotesTableViewController.m */; };
 		F6C0979E1BB04EEA008F1469 /* DetailNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C0979D1BB04EEA008F1469 /* DetailNotesViewController.m */; };
 /* End PBXBuildFile section */
@@ -75,6 +76,7 @@
 		F6569DB51BAF97CC002DDE27 /* BlocNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlocNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6569DBA1BAF97CC002DDE27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6569DBB1BAF97CC002DDE27 /* BlocNotesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlocNotesTests.m; sourceTree = "<group>"; };
+		F6A427101BB59A9400ED7F87 /* NotePreprocessor.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = NotePreprocessor.js; sourceTree = "<group>"; };
 		F6C097991BB04EC7008F1469 /* NotesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesTableViewController.h; sourceTree = "<group>"; };
 		F6C0979A1BB04EC7008F1469 /* NotesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesTableViewController.m; sourceTree = "<group>"; };
 		F6C0979C1BB04EEA008F1469 /* DetailNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailNotesViewController.h; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				F611384B1BB39FBC00DFF6F9 /* BlocNotesShareExtension.entitlements */,
+				F6A427101BB59A9400ED7F87 /* NotePreprocessor.js */,
 				F611383F1BB39F7A00DFF6F9 /* ShareViewController.h */,
 				F61138401BB39F7A00DFF6F9 /* ShareViewController.m */,
 				F61138421BB39F7A00DFF6F9 /* MainInterface.storyboard */,
@@ -309,6 +312,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6A427111BB59A9400ED7F87 /* NotePreprocessor.js in Resources */,
 				F61138431BB39F7A00DFF6F9 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
