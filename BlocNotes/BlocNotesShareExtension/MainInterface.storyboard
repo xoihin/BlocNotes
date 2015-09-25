@@ -46,7 +46,8 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="ckL-ff-j65" firstAttribute="top" secondItem="gJF-pX-eGh" secondAttribute="bottom" constant="42" id="1Wi-76-PFe"/>
                             <constraint firstAttribute="width" secondItem="2eV-Eh-29H" secondAttribute="width" id="3fx-UQ-5dQ"/>
@@ -67,6 +68,9 @@
                                 <exclude reference="UOG-TB-sMQ"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="2hO-rR-xH6" appends="YES" id="cja-iV-R94"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="shareTextTitle" destination="gJF-pX-eGh" id="bDv-ZI-1bK"/>
@@ -74,6 +78,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CEy-Cv-SGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="2hO-rR-xH6">
+                    <connections>
+                        <action selector="tapGestureDidTap:" destination="j1y-V4-xli" id="SO0-uc-kfm"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="539" y="97"/>
         </scene>

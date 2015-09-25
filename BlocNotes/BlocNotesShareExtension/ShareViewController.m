@@ -7,7 +7,7 @@
 //
 
 #import "ShareViewController.h"
-#import "DetailNotesViewController.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
 
 
@@ -17,51 +17,17 @@
 
 @implementation ShareViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    
+    
 
-- (void)pushConfigurationViewController:(UIViewController *)viewController {
-    NSLog(@"Push...");
 }
 
-
-- (void)presentationAnimationDidFinish {
-    NSLog(@"Presentation...");
-}
-
-
-- (void)loadView{
-    [super loadView];
-    NSLog(@"loadView...");
-}
-
-
-
-- (BOOL)isContentValid {
-    // Do validation of contentText and/or NSExtensionContext attachments here
-    return YES;
-}
-
-- (void)didSelectPost {
-    // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
-    
-    
-    NSLog(@"Did call");
-    
-    NSUserDefaults *shared = [[NSUserDefaults alloc] initWithSuiteName:@"group.xahBlocNotes"];
-    [shared setObject:self.contentText forKey:@"noteKey"];
-    [shared synchronize];
-    
-    id value = [shared valueForKey:@"noteKey"];
-    NSLog(@"%@",value);
-    
-    
-    
-    // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
-    [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-}
-
-- (NSArray *)configurationItems {
-    // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
-    return @[];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.shareTextTitle becomeFirstResponder];
 }
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
@@ -69,6 +35,12 @@
 }
 
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)sender {
+    [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+}
+
+- (IBAction)tapGestureDidTap:(UITapGestureRecognizer *)sender {
+    [self.shareTextTitle resignFirstResponder];
+    [self.shareTextView resignFirstResponder];
 }
 
 
