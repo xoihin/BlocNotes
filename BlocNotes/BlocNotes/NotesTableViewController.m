@@ -7,14 +7,17 @@
 //
 
 #import "NotesTableViewController.h"
-#import <CoreData/CoreData.h>
 #import "DetailNotesViewController.h"
+#import "myShareManager.h"
 
 
 
 @interface NotesTableViewController ()
 
 @property (nonatomic, strong) NSMutableArray *notesArray;
+
+@property (readwrite, strong) NSManagedObjectContext *managedObjectContext;
+@property (readwrite, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -34,6 +37,9 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     self.navigationItem.title = NSLocalizedString(@"BlocNotes", @"TableView Title");
+    
+    myShareManager *sharedManager = [myShareManager sharedManager];
+    self.managedObjectContext = [sharedManager createManagedObjectContextWithConcurrencyType:NSMainQueueConcurrencyType];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,19 +58,6 @@
     self.notesArray = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
     
     [self.tableView reloadData];
-}
-
-
-#pragma mark - Core Data
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    NSManagedObjectContext *context = nil;
-    id delegate = [[UIApplication sharedApplication] delegate];
-    if ([delegate performSelector:@selector(managedObjectContext)]) {
-        context = [delegate managedObjectContext];
-    }
-    return context;
 }
 
 
