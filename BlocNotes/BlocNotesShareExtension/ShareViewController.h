@@ -17,6 +17,10 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *shareTextTitle;
 @property (strong, nonatomic) IBOutlet UITextView *shareTextView;
+@property (strong, nonatomic) IBOutlet UILabel *shareViewHeading;
+
+
+
 
 - (IBAction)tapGestureDidTap:(UITapGestureRecognizer *)sender;
 

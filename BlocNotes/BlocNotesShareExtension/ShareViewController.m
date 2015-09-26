@@ -14,6 +14,7 @@
 
 @interface ShareViewController ()
 
+#define kMyHeadingTitle NSLocalizedString(@"Create Note", @"Create Note")
 
 @end
 
@@ -48,7 +49,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    self.shareViewHeading.text = kMyHeadingTitle;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
