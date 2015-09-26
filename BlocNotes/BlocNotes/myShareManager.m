@@ -75,9 +75,7 @@ static NSString *const kFilename = @"BlocNotes.sqlite";
 {
     NSError *saveError = nil;
     BOOL success = [context save:&saveError];
-    if (success) {
-        // success
-    } else {
+    if (!success) {
         NSLog(@"Core Data save error: %@", [saveError localizedDescription]);
         if (error != nil) {
             *error = saveError;
