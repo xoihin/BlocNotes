@@ -9,21 +9,17 @@
 #import <UIKit/UIKit.h>
 #import <Social/Social.h>
 
-//@interface ShareViewController : SLComposeServiceViewController
+
 @interface ShareViewController : UIViewController
+
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)tapGestureDidTap:(UITapGestureRecognizer *)sender;
 
 @property (strong, nonatomic) IBOutlet UITextField *shareTextTitle;
 @property (strong, nonatomic) IBOutlet UITextView *shareTextView;
 @property (strong, nonatomic) IBOutlet UILabel *shareViewHeading;
-
-
-
-
-- (IBAction)tapGestureDidTap:(UITapGestureRecognizer *)sender;
-
 
 
 

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreData/CoreData.h>
+#import "myShareManager.h"
+
 
 @interface DetailNotesViewController : UIViewController
 
@@ -16,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *myNoteTitle;
 
 @property (nonatomic, strong) NSManagedObject *selectedNote;
+@property (readwrite, strong) NSManagedObjectContext *managedObjectContext;
 
 - (IBAction)tapGestureDidFired:(UITapGestureRecognizer *)sender;
 

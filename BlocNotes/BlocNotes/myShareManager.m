@@ -11,6 +11,7 @@
 
 static NSString *const kFilename = @"BlocNotes.sqlite";
 
+
 @interface myShareManager ()
 
 @property (readwrite, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

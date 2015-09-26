@@ -7,7 +7,7 @@
 //
 
 #import "DetailNotesViewController.h"
-
+#import "BlocNotes.h"
 
 
 @interface DetailNotesViewController () <UITextFieldDelegate, UITextViewDelegate>;
@@ -17,10 +17,11 @@
 #define kNoTitle NSLocalizedString(@"No title", @"No title")
 #define kNoNoteDetail NSLocalizedString(@"No note detail", @"No note detail")
 
-
 @end
 
+
 @implementation DetailNotesViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -45,7 +46,7 @@
         self.navigationItem.title = @"New Note";
         shareBarButtonItem.enabled = NO;
     }
-    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,37 +57,12 @@
 
 
 
-#pragma mark - CoreData
-
-- (NSManagedObjectContext *)managedObjectContext {
-    NSManagedObjectContext *context = nil;
-    id delegate = [[UIApplication sharedApplication] delegate];
-    if ([delegate performSelector:@selector(managedObjectContext)]) {
-        context = [delegate managedObjectContext];
-    }
-    return context;
-}
-
-
-
-/*
- #pragma mark - Navigation
- 
- In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- Get the new view controller using [segue destinationViewController].
- Pass the selected object to the new view controller.
- }
- */
-
-
-
 #pragma mark - Button Actions and Gesture Recognizer
 
--(void)shareAction
-{
-    //    NSLog(@"share button clicked");
+
+-(void)shareAction {
     
+    // Share note content with other apps
     NSMutableArray *noteToShare = [NSMutableArray array];
     
     if (self.myNoteTitle.text.length > 0) {
@@ -101,14 +77,13 @@
         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:noteToShare applicationActivities:nil];
         [self presentViewController:activityVC animated:YES completion:nil];
     }
-    
 }
 
--(void)saveAction
-{
-    //    NSLog(@"save button clicked");
+
+-(void)saveAction {
     
-    NSManagedObjectContext *context = [self managedObjectContext];
+    // Update / add note
+    NSManagedObjectContext *context = [[myShareManager sharedManager] createManagedObjectContextWithConcurrencyType:NSMainQueueConcurrencyType];
     
     if (self.selectedNote) {
         // Update
@@ -119,18 +94,14 @@
         
     } else {
         // Create new note
-        NSManagedObject *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"BlocNotes" inManagedObjectContext:context];
+        BlocNotes *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"BlocNotes" inManagedObjectContext:context];
         [self SetDefaultForBlankNote];
         [newNote setValue:self.myNoteTitle.text forKey:@"noteTitle"];
         [newNote setValue:self.myTextView.text forKey:@"noteText"];
         [newNote setValue:[NSDate date] forKey:@"noteCreatedDate"];
     }
-    
-    NSError *error = nil;
-    // Save the object to persistent store
-    if (![context save:&error]) {
-        NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-    }
+   
+    [[myShareManager sharedManager] saveManagedObject:context error:nil];
     
     // Return
     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -183,13 +154,6 @@
     [self.myNoteTitle resignFirstResponder];
     return YES;
 }
-
-
-
-
-
-
-
 
 
 
