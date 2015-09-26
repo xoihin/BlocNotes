@@ -8,10 +8,12 @@
 
 #import "ShareViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
-
+#import "myShareManager.h"
+#import "BlocNotes.h"
 
 
 @interface ShareViewController ()
+
 
 @end
 
@@ -60,7 +62,17 @@
 }
 
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)sender {
-    [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+    
+    NSManagedObjectContext *context = [[myShareManager sharedManager] createManagedObjectContextWithConcurrencyType:NSMainQueueConcurrencyType];
+    
+    BlocNotes *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"BlocNotes" inManagedObjectContext:context];
+    [newNote setValue:self.shareTextTitle.text forKey:@"noteTitle"];
+    [newNote setValue:self.shareTextView.text forKey:@"noteText"];
+    [newNote setValue:[NSDate date] forKey:@"noteCreatedDate"];
+    
+    [[myShareManager sharedManager] saveManagedObject:context error:nil];
+    
+    [self.extensionContext completeRequestReturningItems:nil completionHandler:nil];
 }
 
 - (IBAction)tapGestureDidTap:(UITapGestureRecognizer *)sender {

@@ -18,7 +18,11 @@
 		F6569DAD1BAF97CC002DDE27 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6569DAC1BAF97CC002DDE27 /* Images.xcassets */; };
 		F6569DB01BAF97CC002DDE27 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6569DAE1BAF97CC002DDE27 /* LaunchScreen.xib */; };
 		F6569DBC1BAF97CC002DDE27 /* BlocNotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6569DBB1BAF97CC002DDE27 /* BlocNotesTests.m */; };
+		F691B4131BB63F8600307D6F /* BlocNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F6569DA31BAF97CC002DDE27 /* BlocNotes.xcdatamodeld */; };
 		F6A427111BB59A9400ED7F87 /* NotePreprocessor.js in Resources */ = {isa = PBXBuildFile; fileRef = F6A427101BB59A9400ED7F87 /* NotePreprocessor.js */; };
+		F6A6E0BC1BB62667003286E3 /* BlocNotes.m in Sources */ = {isa = PBXBuildFile; fileRef = F60E42EB1BB4A1C2009DE3FF /* BlocNotes.m */; };
+		F6A6E0BF1BB626D8003286E3 /* myShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A6E0BE1BB626D8003286E3 /* myShareManager.m */; };
+		F6A6E0C01BB626D8003286E3 /* myShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A6E0BE1BB626D8003286E3 /* myShareManager.m */; };
 		F6C0979B1BB04EC7008F1469 /* NotesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C0979A1BB04EC7008F1469 /* NotesTableViewController.m */; };
 		F6C0979E1BB04EEA008F1469 /* DetailNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C0979D1BB04EEA008F1469 /* DetailNotesViewController.m */; };
 /* End PBXBuildFile section */
@@ -77,6 +81,8 @@
 		F6569DBA1BAF97CC002DDE27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6569DBB1BAF97CC002DDE27 /* BlocNotesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlocNotesTests.m; sourceTree = "<group>"; };
 		F6A427101BB59A9400ED7F87 /* NotePreprocessor.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = NotePreprocessor.js; sourceTree = "<group>"; };
+		F6A6E0BD1BB626D8003286E3 /* myShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myShareManager.h; sourceTree = "<group>"; };
+		F6A6E0BE1BB626D8003286E3 /* myShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myShareManager.m; sourceTree = "<group>"; };
 		F6C097991BB04EC7008F1469 /* NotesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesTableViewController.h; sourceTree = "<group>"; };
 		F6C0979A1BB04EC7008F1469 /* NotesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesTableViewController.m; sourceTree = "<group>"; };
 		F6C0979C1BB04EEA008F1469 /* DetailNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailNotesViewController.h; sourceTree = "<group>"; };
@@ -167,6 +173,8 @@
 				F60E42EA1BB4A1C2009DE3FF /* BlocNotes.h */,
 				F60E42EB1BB4A1C2009DE3FF /* BlocNotes.m */,
 				F6569D9C1BAF97CC002DDE27 /* Supporting Files */,
+				F6A6E0BD1BB626D8003286E3 /* myShareManager.h */,
+				F6A6E0BE1BB626D8003286E3 /* myShareManager.m */,
 			);
 			path = BlocNotes;
 			sourceTree = "<group>";
@@ -342,6 +350,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F61138411BB39F7A00DFF6F9 /* ShareViewController.m in Sources */,
+				F6A6E0C01BB626D8003286E3 /* myShareManager.m in Sources */,
+				F6A6E0BC1BB62667003286E3 /* BlocNotes.m in Sources */,
+				F691B4131BB63F8600307D6F /* BlocNotes.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +364,7 @@
 				F60E42EC1BB4A1C2009DE3FF /* BlocNotes.m in Sources */,
 				F6569DA21BAF97CC002DDE27 /* AppDelegate.m in Sources */,
 				F6C0979B1BB04EC7008F1469 /* NotesTableViewController.m in Sources */,
+				F6A6E0BF1BB626D8003286E3 /* myShareManager.m in Sources */,
 				F6569DA51BAF97CC002DDE27 /* BlocNotes.xcdatamodeld in Sources */,
 				F6569D9F1BAF97CC002DDE27 /* main.m in Sources */,
 			);
