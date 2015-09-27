@@ -83,7 +83,10 @@
 //    [cell.textLabel setText:[NSString stringWithFormat:@"%@ %@", [myNote valueForKey:@"parm 1"], [myNote valueForKey:@"parm 2"]]];
 //    [cell.detailTextLabel setText:[myNote valueForKey:@"detail"]];
     
+    cell.textLabel.font = [ UIFont fontWithName: @"Bodoni 72 Oldstyle" size: 20.0 ];
+    cell.textLabel.textColor = [UIColor brownColor];
     [cell.textLabel setText:[NSString stringWithFormat:@"%@", [myNote valueForKey:@"noteTitle"]]];
+    
     [cell.detailTextLabel setText:[myNote valueForKey:@"noteText"]];
     
     return cell;
@@ -118,6 +121,11 @@
         [self.notesArray removeObjectAtIndex:indexPath.row];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 55;
 }
 
 
