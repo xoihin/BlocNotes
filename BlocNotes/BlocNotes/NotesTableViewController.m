@@ -76,12 +76,10 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NoteCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NoteCell" forIndexPath:indexPath];
     
     // Configure the cell...
     NSManagedObject *myNote = [self.notesArray objectAtIndex:indexPath.row];
-//    [cell.textLabel setText:[NSString stringWithFormat:@"%@ %@", [myNote valueForKey:@"parm 1"], [myNote valueForKey:@"parm 2"]]];
-//    [cell.detailTextLabel setText:[myNote valueForKey:@"detail"]];
     
     cell.textLabel.font = [ UIFont fontWithName: @"Bodoni 72 Oldstyle" size: 20.0 ];
     cell.textLabel.textColor = [UIColor brownColor];
