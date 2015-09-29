@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="b9Q-7F-wT9">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -13,6 +14,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="mnm-IE-AZ7">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="pdg-Gd-QCX" id="5tB-ia-mTx"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="NoteCell" textLabel="Df6-9X-1ie" detailTextLabel="ZzK-97-MqB" style="IBUITableViewCellStyleSubtitle" id="4Fs-IT-L2K">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -50,8 +59,20 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="UAJ-qE-ffq" id="WMh-OL-vDy"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Mh-Ob-OQj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="UAJ-qE-ffq">
+                    <connections>
+                        <outlet property="delegate" destination="pdg-Gd-QCX" id="uUq-W7-zMd"/>
+                        <outlet property="searchBar" destination="mnm-IE-AZ7" id="Nee-VB-QtY"/>
+                        <outlet property="searchContentsController" destination="pdg-Gd-QCX" id="kFB-3i-DpG"/>
+                        <outlet property="searchResultsDataSource" destination="pdg-Gd-QCX" id="AAB-cs-lWK"/>
+                        <outlet property="searchResultsDelegate" destination="pdg-Gd-QCX" id="QQE-LE-7Ay"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1308" y="600"/>
         </scene>

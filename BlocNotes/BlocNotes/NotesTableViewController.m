@@ -9,12 +9,14 @@
 #import "NotesTableViewController.h"
 #import "DetailNotesViewController.h"
 #import "myShareManager.h"
+#import "BlocNotes.h"
 
 
 
-@interface NotesTableViewController ()
+@interface NotesTableViewController () <UISearchControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *notesArray;
+@property (nonatomic, strong) NSMutableArray *filterNotesArray;
 
 @property (readwrite, strong) NSManagedObjectContext *managedObjectContext;
 @property (readwrite, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -62,6 +64,29 @@
 
 
 
+#pragma mark - Search
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"(noteTitle contains[c] %@) or (noteText contains[c] %@)", searchText, searchText];
+    self.filterNotesArray = [[self.notesArray filteredArrayUsingPredicate:resultPredicate]mutableCopy];
+}
+
+
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString
+                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
+                                      objectAtIndex:[self.searchDisplayController.searchBar
+                                                     selectedScopeButtonIndex]]];
+    
+    return YES;
+}
+
+
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -71,7 +96,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return self.notesArray.count;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return [self.filterNotesArray count];
+    } else {
+        return self.notesArray.count;
+    }
 }
 
 
@@ -79,7 +108,13 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NoteCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    NSManagedObject *myNote = [self.notesArray objectAtIndex:indexPath.row];
+    
+    NSManagedObject *myNote = nil;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        myNote = [self.filterNotesArray objectAtIndex:indexPath.row];
+    } else {
+        myNote = [self.notesArray objectAtIndex:indexPath.row];
+    }
     
     cell.textLabel.font = [ UIFont fontWithName: @"Bodoni 72 Oldstyle" size: 20.0 ];
     cell.textLabel.textColor = [UIColor brownColor];
@@ -106,8 +141,15 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
         // Delete object from database
+        if (self.searchDisplayController.active) {
+            NSIndexPath *indexPath = nil;
+            indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+            [context deleteObject:[self.filterNotesArray objectAtIndex:indexPath.row]];
+        } else {
         [context deleteObject:[self.notesArray objectAtIndex:indexPath.row]];
+        }
         
         NSError *error = nil;
         if (![context save:&error]) {
@@ -115,9 +157,17 @@
             return;
         }
         
+        
         // Remove device from table view
-        [self.notesArray removeObjectAtIndex:indexPath.row];
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        if (self.searchDisplayController.active) {
+            [self.filterNotesArray removeObjectAtIndex:indexPath.row];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        } else {
+            [self.notesArray removeObjectAtIndex:indexPath.row];
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
+        
     }
 }
 
@@ -150,13 +200,21 @@
     // Pass the selected object to the new view controller.
     
     if ([[segue identifier] isEqualToString:@"UpdateNote"]) {
-        NSManagedObject *selectedNote = [self.notesArray objectAtIndex:[[self.tableView indexPathForSelectedRow] row]];
+        
+        NSManagedObject *selectedNote = nil;
+        NSIndexPath *indexPath = nil;
+        
+        if (self.searchDisplayController.active) {
+            indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+            selectedNote = [self.filterNotesArray objectAtIndex:indexPath.row];
+        } else {
+            indexPath = [self.tableView indexPathForSelectedRow];
+            selectedNote = [self.notesArray objectAtIndex:[[self.tableView indexPathForSelectedRow] row]];
+        }
+        
         DetailNotesViewController *destViewController = segue.destinationViewController;
         destViewController.selectedNote = selectedNote;
     }
-    
-    
-    
 }
 
 
