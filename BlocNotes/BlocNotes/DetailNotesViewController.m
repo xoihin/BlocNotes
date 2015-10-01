@@ -92,7 +92,7 @@
 -(void)saveAction {
     
     // Update / add note
-    NSManagedObjectContext *context = [[myShareManager sharedManager] createManagedObjectContextWithConcurrencyType:NSMainQueueConcurrencyType];
+    NSManagedObjectContext *context = [[MyShareManager sharedManager] managedObjectContext];
     
     if (self.selectedNote) {
         // Update
@@ -110,7 +110,7 @@
         [newNote setValue:[NSDate date] forKey:@"noteCreatedDate"];
     }
    
-    [[myShareManager sharedManager] saveManagedObject:context error:nil];
+    [[MyShareManager sharedManager] saveManagedObject:context error:nil];
     
     // Return
     [self.navigationController popToRootViewControllerAnimated:YES];

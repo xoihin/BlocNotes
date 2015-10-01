@@ -8,7 +8,7 @@
 
 #import "NotesTableViewController.h"
 #import "DetailNotesViewController.h"
-#import "myShareManager.h"
+#import "MyShareManager.h"
 #import "BlocNotes.h"
 
 
@@ -40,8 +40,8 @@
     
     self.navigationItem.title = NSLocalizedString(@"BlocNotes", @"TableView Title");
     
-    myShareManager *sharedManager = [myShareManager sharedManager];
-    self.managedObjectContext = [sharedManager createManagedObjectContextWithConcurrencyType:NSMainQueueConcurrencyType];
+    MyShareManager *sharedManager = [MyShareManager sharedManager];
+    self.managedObjectContext = [sharedManager managedObjectContext];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -183,19 +183,6 @@
 }
 
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Navigation
