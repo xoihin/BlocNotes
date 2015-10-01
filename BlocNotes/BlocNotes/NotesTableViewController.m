@@ -8,7 +8,7 @@
 
 #import "NotesTableViewController.h"
 #import "DetailNotesViewController.h"
-#import "myShareManager.h"
+#import "MyShareManager.h"
 
 
 
@@ -38,8 +38,8 @@
     
     self.navigationItem.title = NSLocalizedString(@"BlocNotes", @"TableView Title");
     
-    myShareManager *sharedManager = [myShareManager sharedManager];
-    self.managedObjectContext = [sharedManager createManagedObjectContextWithConcurrencyType:NSMainQueueConcurrencyType];
+    MyShareManager *sharedManager = [MyShareManager sharedManager];
+    self.managedObjectContext = [sharedManager managedObjectContext];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,8 +80,6 @@
     
     // Configure the cell...
     NSManagedObject *myNote = [self.notesArray objectAtIndex:indexPath.row];
-//    [cell.textLabel setText:[NSString stringWithFormat:@"%@ %@", [myNote valueForKey:@"parm 1"], [myNote valueForKey:@"parm 2"]]];
-//    [cell.detailTextLabel setText:[myNote valueForKey:@"detail"]];
     
     cell.textLabel.font = [ UIFont fontWithName: @"Bodoni 72 Oldstyle" size: 20.0 ];
     cell.textLabel.textColor = [UIColor brownColor];
@@ -129,20 +127,6 @@
 }
 
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 
 #pragma mark - Navigation
 
@@ -160,11 +144,6 @@
     
     
 }
-
-
-
-
-
 
 
 

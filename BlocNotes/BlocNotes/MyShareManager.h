@@ -10,12 +10,12 @@
 #import <CoreData/CoreData.h>
 
 
-@interface myShareManager : NSObject
+@interface MyShareManager : NSObject
 
 
 + (instancetype)sharedManager;
 
-- (NSManagedObjectContext *)createManagedObjectContextWithConcurrencyType:(NSManagedObjectContextConcurrencyType)concurrencyType;
+- (NSManagedObjectContext *)managedObjectContext;
 
 - (BOOL)saveManagedObject:(NSManagedObjectContext *)context error:(NSError **)error;
 

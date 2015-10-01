@@ -6,29 +6,30 @@
 //  Copyright (c) 2015 XoiAHin. All rights reserved.
 //
 
-#import "myShareManager.h"
+#import "MyShareManager.h"
 
 
 static NSString *const kFilename = @"BlocNotes.sqlite";
 
 
-@interface myShareManager ()
+@interface MyShareManager ()
 
+@property (readwrite, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readwrite, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readwrite, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 @end
 
 
-@implementation myShareManager
+@implementation MyShareManager
 
 
 + (instancetype)sharedManager
 {
-    static myShareManager *sharedManager;
+    static MyShareManager *sharedManager;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedManager = [[myShareManager alloc] init];
+        sharedManager = [[MyShareManager alloc] init];
     });
     return sharedManager;
 }
@@ -64,11 +65,15 @@ static NSString *const kFilename = @"BlocNotes.sqlite";
     return _persistentStoreCoordinator;
 }
 
-- (NSManagedObjectContext *)createManagedObjectContextWithConcurrencyType:(NSManagedObjectContextConcurrencyType)concurrencyType
+
+- (NSManagedObjectContext *)managedObjectContext
 {
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:concurrencyType];
-    [context setPersistentStoreCoordinator:self.persistentStoreCoordinator];
-    return context;
+    if (_managedObjectContext == nil) {
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        [_managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+    }
+    
+    return _managedObjectContext;
 }
 
 

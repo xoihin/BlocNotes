@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "myShareManager.h"
+#import "MyShareManager.h"
 
 
 @interface DetailNotesViewController : UIViewController
