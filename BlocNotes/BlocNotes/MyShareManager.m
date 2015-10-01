@@ -66,7 +66,6 @@ static NSString *const kFilename = @"BlocNotes.sqlite";
 }
 
 
-
 - (NSManagedObjectContext *)managedObjectContext
 {
     if (_managedObjectContext == nil) {

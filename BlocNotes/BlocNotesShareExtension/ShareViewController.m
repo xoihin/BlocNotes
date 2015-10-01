@@ -78,10 +78,13 @@
     [self.extensionContext completeRequestReturningItems:nil completionHandler:nil];
 }
 
+
 - (IBAction)tapGestureDidTap:(UITapGestureRecognizer *)sender {
     [self.shareTextTitle resignFirstResponder];
     [self.shareTextView resignFirstResponder];
 }
+
+
 
 
 @end
