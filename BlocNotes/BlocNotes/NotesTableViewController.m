@@ -65,7 +65,12 @@
     
     self.notesArray = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
     
-    [self.tableView reloadData];
+    if (self.searchDisplayController.active)
+    {
+        [self.searchDisplayController.searchResultsTableView reloadData];
+    } else {
+        [self.tableView reloadData];
+    }
 }
 
 
@@ -90,7 +95,10 @@
     return YES;
 }
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
 
+    [self.tableView reloadData];
+}
 
 
 #pragma mark - Table view data source
