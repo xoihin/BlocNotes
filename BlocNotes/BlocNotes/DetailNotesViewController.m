@@ -12,10 +12,9 @@
 
 @interface DetailNotesViewController () <UITextFieldDelegate, UITextViewDelegate>;
 
-#define kDefaultTextTitle NSLocalizedString(@"Title of this note", @"Default text")
-#define kDefaultTextBody NSLocalizedString(@"Write your note...", @"Default text")
 #define kNoTitle NSLocalizedString(@"No title", @"No title")
 #define kNoNoteDetail NSLocalizedString(@"No note detail", @"No note detail")
+#define kInputError NSLocalizedString(@"Input Error", @"Input Error")
 
 @end
 
@@ -41,8 +40,6 @@
         self.navigationItem.title = @"Update Note";
         shareBarButtonItem.enabled = YES;
     } else {
-        self.myTextView.text = kDefaultTextBody;
-        self.myNoteTitle.placeholder = kDefaultTextTitle;
         self.navigationItem.title = @"New Note";
         shareBarButtonItem.enabled = NO;
     }
@@ -75,19 +72,52 @@
     
     if (noteToShare.count > 0) {
         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:noteToShare applicationActivities:nil];
-        [self presentViewController:activityVC animated:YES completion:nil];
+        //if iPhone
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            [self presentViewController:activityVC animated:YES completion:nil];
+        }
+        //if iPad
+        else {
+            // Change Rect to position Popover
+            UIPopoverController *popup = [[UIPopoverController alloc] initWithContentViewController:activityVC];
+            [popup presentPopoverFromRect:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/4, 0, 0)inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        }
     }
 }
 
 
 -(void)saveAction {
     
+    // Title cannot be blank
+    if ([self.myNoteTitle.text isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:kInputError
+                              message:kNoTitle
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
+    
+    // Note text cannot be blank
+    if ([self.myTextView.text isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:kInputError
+                              message:kNoNoteDetail
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
+    
+    
     // Update / add note
     NSManagedObjectContext *context = [[MyShareManager sharedManager] managedObjectContext];
     
     if (self.selectedNote) {
         // Update
-        [self SetDefaultForBlankNote];
         [self.selectedNote setValue:self.myNoteTitle.text forKey:@"noteTitle"];
         [self.selectedNote setValue:self.myTextView.text forKey:@"noteText"];
         [self.selectedNote setValue:[NSDate date] forKey:@"noteLastModifiedDate"];
@@ -95,7 +125,6 @@
     } else {
         // Create new note
         BlocNotes *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"BlocNotes" inManagedObjectContext:context];
-        [self SetDefaultForBlankNote];
         [newNote setValue:self.myNoteTitle.text forKey:@"noteTitle"];
         [newNote setValue:self.myTextView.text forKey:@"noteText"];
         [newNote setValue:[NSDate date] forKey:@"noteCreatedDate"];
@@ -114,34 +143,17 @@
 }
 
 
-- (void) SetDefaultForBlankNote {
-    
-    if ([self.myNoteTitle.text isEqualToString:@""]) {
-        self.myNoteTitle.text = kNoTitle;
-    }
-    if ([self.myTextView.text isEqualToString:kDefaultTextBody]) {
-        self.myTextView.text = kNoNoteDetail;
-    }
-    
-}
-
 
 
 #pragma mark - Text View Delegates
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    if ([self.myTextView.text isEqualToString:kDefaultTextBody]) {
-        self.myTextView.text = @"";
-    }
     [self.myTextView becomeFirstResponder];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    if ([self.myTextView.text isEqualToString:@""]) {
-        self.myTextView.text = kDefaultTextBody;
-    }
     [self.myTextView resignFirstResponder];
 }
 
