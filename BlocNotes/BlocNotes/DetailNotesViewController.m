@@ -100,7 +100,7 @@
         return;
     }
     
-    // Title cannot be blank
+    // Note text cannot be blank
     if ([self.myTextView.text isEqualToString:@""]) {
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:kInputError
@@ -111,6 +111,7 @@
         [alert show];
         return;
     }
+    
     
     // Update / add note
     NSManagedObjectContext *context = [[MyShareManager sharedManager] managedObjectContext];
