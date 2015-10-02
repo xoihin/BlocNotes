@@ -122,7 +122,6 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NoteCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    
     NSManagedObject *myNote = nil;
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         myNote = [self.filterNotesArray objectAtIndex:indexPath.row];
@@ -191,8 +190,6 @@
 }
 
 
-
-
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -217,11 +214,6 @@
         destViewController.selectedNote = selectedNote;
     }
 }
-
-
-
-
-
 
 
 
