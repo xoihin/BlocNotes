@@ -54,6 +54,84 @@
 {
     [super viewDidAppear:animated];
     
+    [self loadData];
+    
+    
+    // iCloud notification subscriptions
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    
+    [notificationCenter addObserver:self selector:@selector(storeWillChange:)
+                               name:NSPersistentStoreCoordinatorStoresWillChangeNotification
+                             object:self.managedObjectContext.persistentStoreCoordinator];
+    
+    [notificationCenter addObserver:self selector:@selector(storeDidChange:)
+                               name:NSPersistentStoreCoordinatorStoresDidChangeNotification
+                             object:self.managedObjectContext.persistentStoreCoordinator];
+    
+    [notificationCenter addObserver:self selector:@selector(storeDidImportUbiquitousContentChanges:)
+                               name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+                             object:self.managedObjectContext.persistentStoreCoordinator];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.managedObjectContext.persistentStoreCoordinator];
+}
+
+
+
+#pragma mark - iCloud Integration
+
+
+- (void)storeDidImportUbiquitousContentChanges:(NSNotification*)notification {
+    
+    NSLog(@"%@", notification.userInfo.description);
+    NSManagedObjectContext *moc = self.managedObjectContext;
+    [moc performBlock:^{
+        // Merge the content
+        [moc mergeChangesFromContextDidSaveNotification:notification];
+    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Refresh the UI here
+        [self loadData];
+    });
+}
+
+- (void)storeWillChange:(NSNotification*)notification {
+    
+    NSLog(@"%@", notification.userInfo.description);
+    NSManagedObjectContext *moc = self.managedObjectContext;
+    [moc performBlockAndWait:^{
+        NSError *error = nil;
+        if ([moc hasChanges]) {
+            [moc save:&error];
+        }
+        [moc reset];
+    }];
+}
+
+- (void)storeDidChange:(NSNotification*)notification {
+    
+    NSLog(@"%@", notification.userInfo.description);
+    // At this point it's official, the change has happened. Tell your
+    // user interface to refresh itself
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Refresh the UI here
+        [self loadData];
+    });
+}
+
+
+
+
+- (void)loadData {
+    
     // Fetch the devices from persistent data store
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"BlocNotes"];
@@ -72,6 +150,7 @@
         [self.tableView reloadData];
     }
 }
+
 
 
 
