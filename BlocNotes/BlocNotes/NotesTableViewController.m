@@ -170,7 +170,7 @@
 
 
 - (void) iCloudAccountAvailabilityChanged:(NSNotification*)notification {
-    NSLog(@"iCloud account availability changed...");
+//    NSLog(@"iCloud account availability changed...");
     
 /*  The user might log out of iCloud or switch to another account.
     If a user logs out of iCloud, or switches to another account, the ubiquity containers for the previously used
