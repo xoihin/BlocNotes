@@ -21,6 +21,8 @@
 @property (readwrite, strong) NSManagedObjectContext *managedObjectContext;
 @property (readwrite, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
+@property (nonatomic, strong) NSString *useiCloud;
+
 @end
 
 
@@ -58,30 +60,45 @@
     
     
     // iCloud notification subscriptions
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
-    [notificationCenter addObserver:self selector:@selector(storeWillChange:)
-                               name:NSPersistentStoreCoordinatorStoresWillChangeNotification
-                             object:self.managedObjectContext.persistentStoreCoordinator];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    _useiCloud = [ud objectForKey:@"useiCloud"];
     
-    [notificationCenter addObserver:self selector:@selector(storeDidChange:)
-                               name:NSPersistentStoreCoordinatorStoresDidChangeNotification
-                             object:self.managedObjectContext.persistentStoreCoordinator];
-    
-    [notificationCenter addObserver:self selector:@selector(storeDidImportUbiquitousContentChanges:)
-                               name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-                             object:self.managedObjectContext.persistentStoreCoordinator];
+    if ([_useiCloud isEqualToString:@"YES"]) {
+        
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        
+        [notificationCenter addObserver:self selector:@selector(storeWillChange:)
+                                   name:NSPersistentStoreCoordinatorStoresWillChangeNotification
+                                 object:self.managedObjectContext.persistentStoreCoordinator];
+        
+        [notificationCenter addObserver:self selector:@selector(storeDidChange:)
+                                   name:NSPersistentStoreCoordinatorStoresDidChangeNotification
+                                 object:self.managedObjectContext.persistentStoreCoordinator];
+        
+        [notificationCenter addObserver:self selector:@selector(storeDidImportUbiquitousContentChanges:)
+                                   name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+                                 object:self.managedObjectContext.persistentStoreCoordinator];
+        
+        [notificationCenter addObserver: self selector: @selector (iCloudAccountAvailabilityChanged:)
+                                   name: NSUbiquityIdentityDidChangeNotification
+                                 object: nil];
+    }
 }
 
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.managedObjectContext.persistentStoreCoordinator];
+    if ([_useiCloud isEqualToString:@"YES"]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUbiquityIdentityDidChangeNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.managedObjectContext.persistentStoreCoordinator];
+    }
 }
 
 
@@ -152,6 +169,15 @@
 }
 
 
+- (void) iCloudAccountAvailabilityChanged:(NSNotification*)notification {
+    NSLog(@"iCloud account availability changed...");
+    
+/*  The user might log out of iCloud or switch to another account.
+    If a user logs out of iCloud, or switches to another account, the ubiquity containers for the previously used
+    account are no longer available to your app.
+ */
+    
+}
 
 
 

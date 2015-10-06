@@ -11,6 +11,12 @@
 
 @interface AppDelegate () <UIAlertViewDelegate>
 
+#define kStorageOption NSLocalizedString(@"Choose Storage Option", @"Choose Storage Option")
+#define kStorageMessage NSLocalizedString(@"Should notes be stored in iCloud and available on all your devices?", @"Storage message")
+#define kLocalOnly NSLocalizedString(@"Local Only", @"Local Only")
+#define kUseiCloud NSLocalizedString(@"Use iCloud", @"Use iCloud")
+
+
 @property (nonatomic, strong) id currentiCloudToken;
 @property (nonatomic, assign) BOOL firstLaunchWithiCloudAvailable;
 
@@ -21,8 +27,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    
 
     // Obtain the iCloud token
     NSFileManager* fileManager = [NSFileManager defaultManager];
@@ -37,15 +41,7 @@
         [[NSUserDefaults standardUserDefaults] removeObjectForKey: @"com.xah.BlocNote.UbiquityIdentityToken"];
     }
     
-    // Registering for iCloud availability change notifications
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector (iCloudAccountAvailabilityChanged:)
-                                                 name: NSUbiquityIdentityDidChangeNotification
-                                               object: nil];
-    
-    
     // Invite the user to use iCloud - one time offer only.
-    
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSString *useiCloud = [ud objectForKey:@"useiCloud"];
     
@@ -56,24 +52,18 @@
     }
     
     if (_currentiCloudToken && _firstLaunchWithiCloudAvailable) {
-
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @"Choose Storage Option"
-                              message: @"Should notes be stored in iCloud and available on all your devices?"
+                              initWithTitle: kStorageOption
+                              message: kStorageMessage
                               delegate: self
-                              cancelButtonTitle: @"Local Only"
-                              otherButtonTitles: @"Use iCloud", nil];
+                              cancelButtonTitle: kLocalOnly
+                              otherButtonTitles: kUseiCloud, nil];
         [alert show];
     }
-    
     return YES;
 }
 
 
-- (void) iCloudAccountAvailabilityChanged:(NSNotification*)notification {
-    NSLog(@"iCloud account availability changed...");
-    
-}
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     // the user clicked OK
