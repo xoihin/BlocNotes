@@ -9,7 +9,10 @@
 #import "AppDelegate.h"
 
 
-@interface AppDelegate ()
+@interface AppDelegate () <UIAlertViewDelegate>
+
+@property (nonatomic, strong) id currentiCloudToken;
+@property (nonatomic, assign) BOOL firstLaunchWithiCloudAvailable;
 
 @end
 
@@ -20,10 +23,78 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-//    NSLog(@"Documents folder: %@",[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]);
-        
+
+    // Obtain the iCloud token
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    _currentiCloudToken = fileManager.ubiquityIdentityToken;
+    
+    // Archiving iCloud availability in the user defaults database
+    if (_currentiCloudToken) {
+        NSData *newTokenData =
+        [NSKeyedArchiver archivedDataWithRootObject: _currentiCloudToken];
+        [[NSUserDefaults standardUserDefaults] setObject: newTokenData forKey: @"com.xah.BlocNote.UbiquityIdentityToken"];
+    } else {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey: @"com.xah.BlocNote.UbiquityIdentityToken"];
+    }
+    
+    // Registering for iCloud availability change notifications
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector (iCloudAccountAvailabilityChanged:)
+                                                 name: NSUbiquityIdentityDidChangeNotification
+                                               object: nil];
+    
+    
+    // Invite the user to use iCloud - one time offer only.
+    
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSString *useiCloud = [ud objectForKey:@"useiCloud"];
+    
+    if (!useiCloud) {
+        _firstLaunchWithiCloudAvailable = true;
+    } else {
+        _firstLaunchWithiCloudAvailable = false;
+    }
+    
+    if (_currentiCloudToken && _firstLaunchWithiCloudAvailable) {
+
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"Choose Storage Option"
+                              message: @"Should notes be stored in iCloud and available on all your devices?"
+                              delegate: self
+                              cancelButtonTitle: @"Local Only"
+                              otherButtonTitles: @"Use iCloud", nil];
+        [alert show];
+    }
+    
     return YES;
 }
+
+
+- (void) iCloudAccountAvailabilityChanged:(NSNotification*)notification {
+    NSLog(@"iCloud account availability changed...");
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    // the user clicked OK
+    NSString *useicloud = [[NSString alloc]init];
+    if (buttonIndex == 0) {
+        // Local only
+        useicloud = @"NO";
+    } else {
+        // Use icloud
+        useicloud = @"YES";
+    }
+    
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:useicloud forKey:@"useiCloud"];
+    [ud synchronize];
+}
+
+
+
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
