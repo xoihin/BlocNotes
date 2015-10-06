@@ -85,6 +85,29 @@
 }
 
 
+- (void)loadData {
+    
+    // Fetch the devices from persistent data store
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"BlocNotes"];
+    
+    // Sort
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"noteTitle" ascending:YES];
+    NSArray *sortDescriptors = @[sortDescriptor];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    self.notesArray = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
+    
+    if (self.searchDisplayController.active)
+    {
+        [self.searchDisplayController.searchResultsTableView reloadData];
+    } else {
+        [self.tableView reloadData];
+    }
+}
+
+
+
 
 #pragma mark - iCloud Integration
 
@@ -97,7 +120,8 @@
         // Merge the content
         [moc mergeChangesFromContextDidSaveNotification:notification];
     }];
-    dispatch_async(dispatch_get_main_queue(), ^{
+//    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         // Refresh the UI here
         [self loadData];
     });
@@ -121,7 +145,7 @@
     NSLog(@"%@", notification.userInfo.description);
     // At this point it's official, the change has happened. Tell your
     // user interface to refresh itself
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         // Refresh the UI here
         [self loadData];
     });
@@ -129,27 +153,6 @@
 
 
 
-
-- (void)loadData {
-    
-    // Fetch the devices from persistent data store
-    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"BlocNotes"];
-    
-    // Sort
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"noteTitle" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    self.notesArray = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
-    
-    if (self.searchDisplayController.active)
-    {
-        [self.searchDisplayController.searchResultsTableView reloadData];
-    } else {
-        [self.tableView reloadData];
-    }
-}
 
 
 
