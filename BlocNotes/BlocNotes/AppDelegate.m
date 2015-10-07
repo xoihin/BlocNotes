@@ -11,14 +11,8 @@
 
 @interface AppDelegate () <UIAlertViewDelegate>
 
-#define kStorageOption NSLocalizedString(@"Choose Storage Option", @"Choose Storage Option")
-#define kStorageMessage NSLocalizedString(@"Should notes be stored in iCloud and available on all your devices?", @"Storage message")
-#define kLocalOnly NSLocalizedString(@"Local Only", @"Local Only")
-#define kUseiCloud NSLocalizedString(@"Use iCloud", @"Use iCloud")
-
-
 @property (nonatomic, strong) id currentiCloudToken;
-@property (nonatomic, assign) BOOL firstLaunchWithiCloudAvailable;
+
 
 @end
 
@@ -41,46 +35,8 @@
         [[NSUserDefaults standardUserDefaults] removeObjectForKey: @"com.xah.BlocNote.UbiquityIdentityToken"];
     }
     
-    // Invite the user to use iCloud - one time offer only.
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSString *useiCloud = [ud objectForKey:@"useiCloud"];
-    
-    if (!useiCloud) {
-        _firstLaunchWithiCloudAvailable = true;
-    } else {
-        _firstLaunchWithiCloudAvailable = false;
-    }
-    
-    if (_currentiCloudToken && _firstLaunchWithiCloudAvailable) {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: kStorageOption
-                              message: kStorageMessage
-                              delegate: self
-                              cancelButtonTitle: kLocalOnly
-                              otherButtonTitles: kUseiCloud, nil];
-        [alert show];
-    }
     return YES;
 }
-
-
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    // the user clicked OK
-    NSString *useicloud = [[NSString alloc]init];
-    if (buttonIndex == 0) {
-        // Local only
-        useicloud = @"NO";
-    } else {
-        // Use icloud
-        useicloud = @"YES";
-    }
-    
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud setObject:useicloud forKey:@"useiCloud"];
-    [ud synchronize];
-}
-
 
 
 

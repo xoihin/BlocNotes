@@ -15,6 +15,8 @@
 #define kNoTitle NSLocalizedString(@"No title", @"No title")
 #define kNoNoteDetail NSLocalizedString(@"No note detail", @"No note detail")
 #define kInputError NSLocalizedString(@"Input Error", @"Input Error")
+#define kUpdateNote NSLocalizedString(@"Update", @"Heading")
+#define kNewNote NSLocalizedString(@"New", @"Heading")
 
 @end
 
@@ -38,10 +40,10 @@
     if (self.selectedNote) {
         [self.myNoteTitle setText:[self.selectedNote valueForKey:@"noteTitle"]];
         [self.myTextView setText:[self.selectedNote valueForKey:@"noteText"]];
-        self.navigationItem.title = @"Update Note";
+        self.navigationItem.title = kUpdateNote;
         shareBarButtonItem.enabled = YES;
     } else {
-        self.navigationItem.title = @"New Note";
+        self.navigationItem.title = kNewNote;
         self.myTextView.editable = YES;
         self.myTextView.backgroundColor = [UIColor lightGrayColor];
         [self.myNoteTitle becomeFirstResponder];

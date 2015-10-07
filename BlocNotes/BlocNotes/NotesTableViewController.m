@@ -40,7 +40,7 @@
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
-    self.navigationItem.title = NSLocalizedString(@"BlocNotes", @"TableView Title");
+    self.navigationItem.title = NSLocalizedString(@"Notes", @"TableView Title");
     
     MyShareManager *sharedManager = [MyShareManager sharedManager];
     self.managedObjectContext = [sharedManager managedObjectContext];
