@@ -58,47 +58,37 @@
     
     [self loadData];
     
-    
     // iCloud notification subscriptions
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    _useiCloud = [ud objectForKey:@"useiCloud"];
+    [notificationCenter addObserver:self selector:@selector(storeWillChange:)
+                               name:NSPersistentStoreCoordinatorStoresWillChangeNotification
+                             object:self.managedObjectContext.persistentStoreCoordinator];
     
-    if ([_useiCloud isEqualToString:@"YES"]) {
-        
-        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-        
-        [notificationCenter addObserver:self selector:@selector(storeWillChange:)
-                                   name:NSPersistentStoreCoordinatorStoresWillChangeNotification
-                                 object:self.managedObjectContext.persistentStoreCoordinator];
-        
-        [notificationCenter addObserver:self selector:@selector(storeDidChange:)
-                                   name:NSPersistentStoreCoordinatorStoresDidChangeNotification
-                                 object:self.managedObjectContext.persistentStoreCoordinator];
-        
-        [notificationCenter addObserver:self selector:@selector(storeDidImportUbiquitousContentChanges:)
-                                   name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-                                 object:self.managedObjectContext.persistentStoreCoordinator];
-        
-        [notificationCenter addObserver: self selector: @selector (iCloudAccountAvailabilityChanged:)
-                                   name: NSUbiquityIdentityDidChangeNotification
-                                 object: nil];
-    }
+    [notificationCenter addObserver:self selector:@selector(storeDidChange:)
+                               name:NSPersistentStoreCoordinatorStoresDidChangeNotification
+                             object:self.managedObjectContext.persistentStoreCoordinator];
+    
+    [notificationCenter addObserver:self selector:@selector(storeDidImportUbiquitousContentChanges:)
+                               name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+                             object:self.managedObjectContext.persistentStoreCoordinator];
+    
+    [notificationCenter addObserver: self selector: @selector (iCloudAccountAvailabilityChanged:)
+                               name: NSUbiquityIdentityDidChangeNotification
+                             object: nil];
 }
 
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    if ([_useiCloud isEqualToString:@"YES"]) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:nil];
-        
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUbiquityIdentityDidChangeNotification object:nil];
-        
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
-        
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.managedObjectContext.persistentStoreCoordinator];
-    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUbiquityIdentityDidChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.managedObjectContext.persistentStoreCoordinator];
 }
 
 
