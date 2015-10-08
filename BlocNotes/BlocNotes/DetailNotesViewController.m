@@ -29,7 +29,8 @@
     // Set up right bar buttons
     UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareAction)];
     UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveAction)];
-    self.navigationItem.rightBarButtonItems = [[NSArray alloc] initWithObjects:saveBarButtonItem, shareBarButtonItem, nil];
+    UIBarButtonItem *editBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editAction)];
+    self.navigationItem.rightBarButtonItems = [[NSArray alloc] initWithObjects:saveBarButtonItem, shareBarButtonItem, editBarButtonItem , nil];
     
     self.myTextView.delegate = self;
     self.myNoteTitle.delegate = self;
@@ -41,6 +42,10 @@
         shareBarButtonItem.enabled = YES;
     } else {
         self.navigationItem.title = @"New Note";
+        self.myTextView.editable = YES;
+        self.myTextView.backgroundColor = [UIColor lightGrayColor];
+        [self.myNoteTitle becomeFirstResponder];
+        editBarButtonItem.enabled = NO;
         shareBarButtonItem.enabled = NO;
     }
 
@@ -55,6 +60,21 @@
 
 
 #pragma mark - Button Actions and Gesture Recognizer
+
+-(void)editAction {
+    
+    if (self.myTextView.editable == NO) {
+        self.myTextView.editable = YES;
+        self.myTextView.backgroundColor = [UIColor lightGrayColor];
+        [self.myTextView becomeFirstResponder];
+    } else {
+        self.myTextView.editable = NO;
+        self.myTextView.backgroundColor = [UIColor clearColor];
+        [self.myTextView resignFirstResponder];
+    }
+    
+}
+
 
 
 -(void)shareAction {
