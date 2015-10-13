@@ -21,6 +21,8 @@
 @property (readwrite, strong) NSManagedObjectContext *managedObjectContext;
 @property (readwrite, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
+@property (nonatomic, strong) NSString *useiCloud;
+
 @end
 
 
@@ -38,7 +40,7 @@
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
-    self.navigationItem.title = NSLocalizedString(@"BlocNotes", @"TableView Title");
+    self.navigationItem.title = NSLocalizedString(@"Notes", @"TableView Title");
     
     MyShareManager *sharedManager = [MyShareManager sharedManager];
     self.managedObjectContext = [sharedManager managedObjectContext];
@@ -53,6 +55,44 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    [self loadData];
+    
+    // iCloud notification subscriptions
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    
+    [notificationCenter addObserver:self selector:@selector(storeWillChange:)
+                               name:NSPersistentStoreCoordinatorStoresWillChangeNotification
+                             object:self.managedObjectContext.persistentStoreCoordinator];
+    
+    [notificationCenter addObserver:self selector:@selector(storeDidChange:)
+                               name:NSPersistentStoreCoordinatorStoresDidChangeNotification
+                             object:self.managedObjectContext.persistentStoreCoordinator];
+    
+    [notificationCenter addObserver:self selector:@selector(storeDidImportUbiquitousContentChanges:)
+                               name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+                             object:self.managedObjectContext.persistentStoreCoordinator];
+    
+    [notificationCenter addObserver: self selector: @selector (iCloudAccountAvailabilityChanged:)
+                               name: NSUbiquityIdentityDidChangeNotification
+                             object: nil];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUbiquityIdentityDidChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.managedObjectContext.persistentStoreCoordinator];
+}
+
+
+- (void)loadData {
     
     // Fetch the devices from persistent data store
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
@@ -72,6 +112,64 @@
         [self.tableView reloadData];
     }
 }
+
+
+
+
+#pragma mark - iCloud Integration
+
+
+- (void)storeDidImportUbiquitousContentChanges:(NSNotification*)notification {
+    
+    NSLog(@"%@", notification.userInfo.description);
+    NSManagedObjectContext *moc = self.managedObjectContext;
+    [moc performBlock:^{
+        // Merge the content
+        [moc mergeChangesFromContextDidSaveNotification:notification];
+    }];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        // Refresh the UI here
+        [self loadData];
+    });
+}
+
+- (void)storeWillChange:(NSNotification*)notification {
+    
+    NSLog(@"%@", notification.userInfo.description);
+    NSManagedObjectContext *moc = self.managedObjectContext;
+    [moc performBlockAndWait:^{
+        NSError *error = nil;
+        if ([moc hasChanges]) {
+            [moc save:&error];
+        }
+        [moc reset];
+    }];
+}
+
+- (void)storeDidChange:(NSNotification*)notification {
+    
+    NSLog(@"%@", notification.userInfo.description);
+    // At this point it's official, the change has happened. Tell your
+    // user interface to refresh itself
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        // Refresh the UI here
+        [self loadData];
+    });
+}
+
+
+- (void) iCloudAccountAvailabilityChanged:(NSNotification*)notification {
+//    NSLog(@"iCloud account availability changed...");
+    
+/*  The user might log out of iCloud or switch to another account.
+    If a user logs out of iCloud, or switches to another account, the ubiquity containers for the previously used
+    account are no longer available to your app.
+ */
+    
+}
+
+
 
 
 

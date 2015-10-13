@@ -14,7 +14,7 @@
 
 @interface ShareViewController ()
 
-#define kMyHeadingTitle NSLocalizedString(@"Create Note", @"Create Note")
+#define kMyHeadingTitle NSLocalizedString(@"Create", @"Heading")
 
 @end
 

@@ -9,7 +9,10 @@
 #import "AppDelegate.h"
 
 
-@interface AppDelegate ()
+@interface AppDelegate () <UIAlertViewDelegate>
+
+@property (nonatomic, strong) id currentiCloudToken;
+
 
 @end
 
@@ -18,12 +21,26 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+
+    // Obtain the iCloud token
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    _currentiCloudToken = fileManager.ubiquityIdentityToken;
     
-//    NSLog(@"Documents folder: %@",[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]);
-        
+    // Archiving iCloud availability in the user defaults database
+    if (_currentiCloudToken) {
+        NSData *newTokenData =
+        [NSKeyedArchiver archivedDataWithRootObject: _currentiCloudToken];
+        [[NSUserDefaults standardUserDefaults] setObject: newTokenData forKey: @"com.xah.BlocNote.UbiquityIdentityToken"];
+    } else {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey: @"com.xah.BlocNote.UbiquityIdentityToken"];
+    }
+    
     return YES;
 }
+
+
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

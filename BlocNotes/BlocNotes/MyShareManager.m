@@ -57,7 +57,8 @@ static NSString *const kFilename = @"BlocNotes.sqlite";
         if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
                                                        configuration:nil
                                                                  URL:persistentStoreURL
-                                                             options:@{ NSInferMappingModelAutomaticallyOption: @YES, NSMigratePersistentStoresAutomaticallyOption: @YES}
+                                                             options:@{ NSInferMappingModelAutomaticallyOption: @YES, NSMigratePersistentStoresAutomaticallyOption: @YES,
+                                                                NSPersistentStoreUbiquitousContentNameKey : @"iCloudBlocNote"}
                                                                error:&error]) {
             NSLog(@"Error creating persistent store at %@: %@", persistentStoreURL, [error localizedDescription]);
         }
